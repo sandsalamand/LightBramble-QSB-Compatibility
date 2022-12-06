@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using OWML.Common;
 using OWML.ModHelper;
+using OWML.ModHelper.Events;
 using QSB.Messaging;
 using QSB.Player;
 using System;
@@ -41,15 +42,12 @@ namespace LightBrambleQSBCompatibility
 
 		private void JoinedGame(PlayerInfo playerInfo)
 		{
-			playerInfo.ExecuteWhenReady(this, () =>
+			//if we're the host and it's not us joining, then send a message to the players to sync them to host's config
+			if (QSB.QSBCore.IsHost && !playerInfo.IsLocalPlayer)
 			{
-				//if we're the host, then send a message to the players to sync them to host's config
-				if (QSB.QSBCore.IsHost && playerInfo.PlayerId != QSBPlayerManager.LocalPlayerId)
-				{
-					ModHelper.Console.WriteLine("pushing LBConfigMessage because player joined game");
-					PushConfigMessage(lbBehaviour.currentConfig);
-				}
-			});
+				ModHelper.Console.WriteLine("pushing LBConfigMessage because player joined game");
+				PushConfigMessage(lbBehaviour.currentConfig);
+			}
 		}
 
 		private void LBClientConfigChanged(BrambleConfig pushConfig)
