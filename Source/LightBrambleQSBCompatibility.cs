@@ -60,8 +60,12 @@ namespace LightBrambleQSBCompatibility
 		//when the client receives a config message from another player, set the client's LightBramble settings to the message data
 		public void ReceivedLBConfigMessage(BrambleConfig incomingConfig)
 		{
-			lbBehaviour.currentConfig = incomingConfig;
 			ModHelper.Console.WriteLine("received LBConfigMessage");
+			ModHelper.Console.WriteLine("swapMusic = " + incomingConfig.swapMusic);
+			ModHelper.Console.WriteLine("disableFog = " + incomingConfig.disableFog);
+			ModHelper.Console.WriteLine("disableFish = " + incomingConfig.disableFish);
+
+			lbBehaviour.currentConfig = incomingConfig;
 		}
 
 		//sends a message containing BrambleConfig data to all players
@@ -82,6 +86,13 @@ namespace LightBrambleQSBCompatibility
 			config = brambleConfig;
 		}
 
+#if DEBUG
+		public override void OnReceiveLocal()
+		{
+			LightBrambleQSBCompatibility.inst.ReceivedLBConfigMessage(config);
+		}
+#endif
+
 		public override void OnReceiveRemote()
 		{
 			LightBrambleQSBCompatibility.inst.ReceivedLBConfigMessage(config);
@@ -91,9 +102,9 @@ namespace LightBrambleQSBCompatibility
 		{
 			base.Serialize(writer);
 
-			BrambleConfigFlags configFlags = (BrambleConfigFlags.SwapMusic | BrambleConfigFlags.DisableFog);
+			BrambleConfigFlags configFlags;
 
-			configFlags = configFlags |
+			configFlags =
 				(config.swapMusic ? BrambleConfigFlags.SwapMusic : 0) |
 				(config.disableFish ? BrambleConfigFlags.DisableFish : 0) |
 				(config.disableFog ? BrambleConfigFlags.DisableFog : 0)
