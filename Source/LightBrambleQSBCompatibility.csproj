@@ -29,13 +29,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="LightBramble">
-      <HintPath>..\..\..\..\AppData\Roaming\OuterWildsModManager\OWML\Mods\sandsalamand.LightBrambleTest\LightBramble.dll</HintPath>
+      <HintPath>..\..\..\AppData\Roaming\OuterWildsModManager\OWML\Mods\sandsalamand.LightBrambleTest\LightBramble.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\..\AppData\Roaming\OuterWildsModManager\OWML\Mods\Raicuparta.QuantumSpaceBuddies\Mirror.dll</HintPath>
+      <HintPath>..\..\..\AppData\Roaming\OuterWildsModManager\OWML\Mods\Raicuparta.QuantumSpaceBuddies\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="QSB">
-      <HintPath>..\..\..\..\AppData\Roaming\OuterWildsModManager\OWML\Mods\Raicuparta.QuantumSpaceBuddies\QSB.dll</HintPath>
+      <HintPath>..\..\..\AppData\Roaming\OuterWildsModManager\OWML\Mods\Raicuparta.QuantumSpaceBuddies\QSB.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

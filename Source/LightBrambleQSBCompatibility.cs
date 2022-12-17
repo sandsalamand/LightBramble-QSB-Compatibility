@@ -1,12 +1,9 @@
 ﻿using Mirror;
 using OWML.Common;
 using OWML.ModHelper;
-using OWML.ModHelper.Events;
 using QSB.Messaging;
 using QSB.Player;
 using System;
-using System.Collections;
-using UnityEngine;
 using static LightBramble.LightBramble;
 
 namespace LightBrambleQSBCompatibility
@@ -46,7 +43,7 @@ namespace LightBrambleQSBCompatibility
 			if (QSB.QSBCore.IsHost && !playerInfo.IsLocalPlayer)
 			{
 				ModHelper.Console.WriteLine("pushing LBConfigMessage because player joined game");
-				PushConfigMessage(lbBehaviour.currentConfig);
+				PushConfigMessage(lbBehaviour.CurrentConfig);
 			}
 		}
 
@@ -65,7 +62,7 @@ namespace LightBrambleQSBCompatibility
 			ModHelper.Console.WriteLine("disableFog = " + incomingConfig.disableFog);
 			ModHelper.Console.WriteLine("disableFish = " + incomingConfig.disableFish);
 
-			lbBehaviour.currentConfig = incomingConfig;
+			lbBehaviour.SetConfig(incomingConfig);
 		}
 
 		//sends a message containing BrambleConfig data to all players
@@ -133,22 +130,5 @@ namespace LightBrambleQSBCompatibility
 		SwapMusic = 1,
 		DisableFish= 2,
 		DisableFog = 4
-	}
-
-	public static class PlayerInfoExtensions
-	{
-		public static void ExecuteWhenReady(this PlayerInfo playerInfo, MonoBehaviour runner, Action action)
-		{
-			runner.StartCoroutine(ExecuteWhenPlayerInfoReadyCoroutine(playerInfo, action));
-		}
-
-		private static IEnumerator ExecuteWhenPlayerInfoReadyCoroutine(PlayerInfo playerInfo, Action action)
-		{
-			while (!playerInfo.IsReady)
-			{
-				yield return new WaitForEndOfFrame();
-			}
-			action?.Invoke();
-		}
 	}
 }
